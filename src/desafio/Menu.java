@@ -53,6 +53,7 @@ public class Menu {
 
     public static void exibirMenuCadastro(Scanner scanner) {
         File file = new File("formulario.txt");
+        CadastroPet cadastroPet = new CadastroPet();
         System.out.println();
 
         System.out.println("Você está no menu de cadastro de pets.");
@@ -61,6 +62,8 @@ public class Menu {
         System.out.println();
 
         TextFileReader.lerArquivo(file);
+        Pet novoPet = cadastroPet.cadastrarPet();
+
 
         System.out.println("Cadastro do pet concluído!");
         System.out.println("Deseja voltar para o menu principal? (S/N)");
