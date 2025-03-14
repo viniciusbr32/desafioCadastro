@@ -1,4 +1,7 @@
-package desafio;
+package desafio.pet;
+
+import desafio.tipos.SexoPet;
+import desafio.tipos.TipoPet;
 
 import java.util.Scanner;
 

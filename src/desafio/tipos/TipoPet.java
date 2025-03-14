@@ -1,4 +1,4 @@
-package desafio;
+package desafio.tipos;
 
 public enum TipoPet {
     CACHORRO(1, "Cachorro"),

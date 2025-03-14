@@ -1,4 +1,7 @@
-package desafio;
+package desafio.pet;
+
+import desafio.tipos.SexoPet;
+import desafio.tipos.TipoPet;
 
 public class Pet {
     private String nome;
