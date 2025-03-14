@@ -4,20 +4,20 @@ import desafio.tipos.SexoPet;
 import desafio.tipos.TipoPet;
 
 public class Pet {
-    private String nome;
-    private String sobrenome;
+    public static final String NAO_INFORMADO = "Não Informado";
+
+    private String nomeESobrenome;
     private TipoPet tipoPet;
     private SexoPet sexoPet;
     private String endereco;
-    private int idade;
+    private double idade;
     private double peso;
     private String raca;
 
 
-    public Pet(String nome, String sobrenome, TipoPet tipoPet, SexoPet sexoPet, String endereco,
-               int idade, double peso, String raca) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
+    public Pet(String nomeESobrenome, TipoPet tipoPet, SexoPet sexoPet, String endereco, double idade,
+               double peso, String raca) {
+        this.nomeESobrenome = nomeESobrenome;
         this.tipoPet = tipoPet;
         this.sexoPet = sexoPet;
         this.endereco = endereco;

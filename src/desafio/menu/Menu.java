@@ -79,6 +79,6 @@ public class Menu {
             menuPrincipal();
             return;
         }
-        System.out.println("Você pode continuar o cadastro ou sair.");
+        System.out.println("Saindo...");
     }
 }
