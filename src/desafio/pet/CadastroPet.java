@@ -71,7 +71,7 @@ public class CadastroPet {
     private String obterEndereco() {
         System.out.println("Vamo cadastrar o Endereço");
         String rua = obterRua();
-        int numeroDaCasa = obterNumeroDaCasa();
+        String numeroDaCasa = obterNumeroDaCasa();
         String cidade = obterCidade();
 
         return rua + ", " + numeroDaCasa + ", " + cidade;
@@ -91,16 +91,23 @@ public class CadastroPet {
         }
     }
 
-    private int obterNumeroDaCasa() {
+    private String obterNumeroDaCasa() {
         while (true) {
             System.out.println("Qual o número da casa?");
-            if (scanner.hasNextInt()) {
-                int numero = scanner.nextInt();
-                scanner.nextLine();
-                return numero;
+
+            String numeroDigitado = scanner.nextLine().trim();
+
+
+            if (numeroDigitado.isEmpty()) {
+                return Pet.NAO_INFORMADO;
             }
-            System.out.println("Só aceitamos números inteiros.");
-            scanner.nextLine();
+
+            try {
+                int numero = Integer.parseInt(numeroDigitado);
+                return String.valueOf(numero);
+            } catch (NumberFormatException e) {
+                System.out.println("Só aceitamos numeros inteiros");
+            }
         }
     }
 
@@ -123,6 +130,10 @@ public class CadastroPet {
             System.out.println("Qual a idade aproximada do pet ? Pode usar virgula ou ponto ");
             String idadeDigitada = scanner.nextLine().replace(",", ".");
 
+            if (idadeDigitada.trim().isEmpty()) {
+                return -1;
+            }
+
             try {
                 double idade = Double.parseDouble(idadeDigitada);
                 if (idade < 1) {
@@ -138,11 +149,14 @@ public class CadastroPet {
     }
 
 
-    public double obterPesopet() {
+    private double obterPesopet() {
         while (true) {
             System.out.print("Qual o peso do pet (em kg)? ");
             String pesoDigitado = scanner.nextLine().replace(",", ".");
 
+            if (pesoDigitado.trim().isEmpty()) {
+                return -1;
+            }
 
             try {
                 double peso = Double.parseDouble(pesoDigitado);

@@ -1,7 +1,0 @@
-1 - thor moreira
-2 - Cachorro
-3 - Macho
-4 - rua dos rosas,106,guariba
-5 - 20 anos
-6 - 0,5 kg
-7 - shintzu
