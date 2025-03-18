@@ -2,7 +2,7 @@ package desafio.pet;
 
 public class PetValidator {
     public static boolean NomeValido(String nome) {
-        return nome != null && nome.matches("^[a-zA-Z]+(\s+[a-zA-Z]+)+$");
+        return nome != null && nome.matches("^[a-zA-Z]+\\s([a-zA-Z]+)+$");
     }
 
     public static boolean Cidadevalida(String cidade) {

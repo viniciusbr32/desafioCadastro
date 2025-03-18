@@ -25,4 +25,32 @@ public class Pet {
         this.peso = peso;
         this.raca = raca;
     }
+
+    public String getNomeESobrenome() {
+        return nomeESobrenome;
+    }
+
+    public String getTipoPet() {
+        return tipoPet.getDescricao();
+    }
+
+    public String getSexoPet() {
+        return sexoPet.getSexo();
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public double getIdade() {
+        return idade;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public String getRaca() {
+        return raca;
+    }
 }

@@ -1,5 +1,6 @@
 package desafio.menu;
 
+import desafio.file.CreateFileCadastro;
 import desafio.pet.CadastroPet;
 import desafio.pet.Pet;
 import desafio.file.TextFileReader;
@@ -67,7 +68,7 @@ public class Menu {
 
         TextFileReader.lerArquivo(file);
         Pet novoPet = cadastroPet.cadastrarPet();
-        System.out.println(novoPet.toString());
+        CreateFileCadastro.CriarArquivoCadastro(novoPet);
 
         System.out.println("Cadastro do pet concluído!");
         System.out.println("Deseja voltar para o menu principal? (S/N)");
@@ -80,5 +81,7 @@ public class Menu {
             return;
         }
         System.out.println("Saindo...");
+
+        scanner.close();
     }
 }

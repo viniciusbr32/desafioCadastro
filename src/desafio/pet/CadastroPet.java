@@ -1,166 +1,179 @@
 package desafio.pet;
 
+import desafio.file.CreateFileCadastro;
 import desafio.tipos.SexoPet;
 import desafio.tipos.TipoPet;
 
 import java.util.Scanner;
 
 public class CadastroPet {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public Pet cadastrarPet() {
-        Scanner scanner = new Scanner(System.in);
 
-        String nomeESobrenome;
-        TipoPet tipo;
-        SexoPet sexo;
-        String rua;
-        int numeroDaCasa;
-        String cidade;
-        String endereco;
-        double idade;
-        double peso;
-        String raca;
 
+        String nomeESobrenome = obterNomeESobrenome();
+        TipoPet tipo = obterTipoPet();
+        SexoPet sexo = obterSexoPet();
+        String endereco = obterEndereco();
+        double idade = obterIdade();
+        double peso = obterPesopet();
+        String raca = obterRaca();
+
+
+        return new Pet(nomeESobrenome, tipo, sexo, endereco, idade, peso, raca);
+    }
+
+    private String obterNomeESobrenome() {
         while (true) {
-            System.out.print("Qual o nome e sobrenome do pet? ");
-            nomeESobrenome = scanner.nextLine();
+            System.out.println("Qual o nome e sobrenome do pet? ");
+            String nomeESobrenome = scanner.nextLine();
 
             if (nomeESobrenome.isEmpty()) {
-                nomeESobrenome = Pet.NAO_INFORMADO;
-                break;
+                return Pet.NAO_INFORMADO;
+
             }
 
             if (PetValidator.NomeValido(nomeESobrenome)) {
-                break;
+                return nomeESobrenome;
+
             }
             System.out.println("Nome inválido! Digite um nome válido com pelo menos um nome e um sobrenome, ambos compostos apenas por letras.");
         }
+    }
 
 
+    private TipoPet obterTipoPet() {
         while (true) {
             System.out.print("Qual o tipo do pet (Cachorro/Gato)? ");
             try {
-                tipo = TipoPet.valueOf(scanner.nextLine().toUpperCase());
-
-                break;
+                return TipoPet.valueOf(scanner.nextLine().toUpperCase());
             } catch (IllegalArgumentException e) {
-                System.out.println("Só aceitamos os valores Cachorro/Gato, por favor corrige");
+                System.out.println("Só aceitamos os valores Cachorro/Gato, por favor corrija");
             }
         }
+    }
 
 
+    private SexoPet obterSexoPet() {
         while (true) {
             System.out.print("Qual o sexo do pet ((Macho/Fêmea))? ");
             try {
-                sexo = SexoPet.valueOf(scanner.nextLine().toUpperCase());
-                break;
+                return SexoPet.valueOf(scanner.nextLine().toUpperCase());
+
             } catch (IllegalArgumentException e) {
                 System.out.println("Só aceitamos os valores Macho/Fêmea, por favor corrige");
             }
         }
+    }
 
+
+    private String obterEndereco() {
         System.out.println("Vamo cadastrar o Endereço");
+        String rua = obterRua();
+        int numeroDaCasa = obterNumeroDaCasa();
+        String cidade = obterCidade();
 
-        while (true) {
-            System.out.println("Qual o numero da casa ?");
-            if (!scanner.hasNextInt()) {
-                System.out.println("Só aceitamos Numeros inteiros");
-                scanner.nextLine();
-                continue;
-            }
-            numeroDaCasa = scanner.nextInt();
-            scanner.nextLine();
-            break;
-        }
+        return rua + "," + numeroDaCasa + "," + cidade;
 
+    }
+
+    private String obterCidade() {
         while (true) {
             System.out.println("Qual a cidade ? ");
-            cidade = scanner.nextLine();
+            String cidade = scanner.nextLine();
 
-            if (cidade.isEmpty()) {
-                System.out.println("Digite um nome de cidade");
-                continue;
+            if (!cidade.isEmpty() && PetValidator.Cidadevalida(cidade)) {
+                return cidade;
             }
 
-            if (!PetValidator.Cidadevalida(cidade)) {
-                System.out.println("Formato invalido, por favor digite algo valido");
-                continue;
-            }
-            break;
+            System.out.println("Formato invalido, por favor digite algo valido");
         }
+    }
 
+    private int obterNumeroDaCasa() {
+        while (true) {
+            System.out.println("Qual o número da casa?");
+            if (scanner.hasNextInt()) {
+                int numero = scanner.nextInt();
+                scanner.nextLine();
+                return numero;
+            }
+            System.out.println("Só aceitamos números inteiros.");
+            scanner.nextLine();
+        }
+    }
+
+
+    private String obterRua() {
         while (true) {
             System.out.println("Qual a rua ? ");
-            rua = scanner.nextLine();
+            String rua = scanner.nextLine();
 
-            if (rua.isEmpty() || rua.equals(" ")) {
-                System.out.println("Digite o nome da rua");
-                continue;
+            if (!rua.isEmpty() && !rua.equals(" ")) {
+                return rua;
             }
-            break;
+
+            System.out.println("Digite o nome da rua");
         }
+    }
 
-
+    private double obterIdade() {
         while (true) {
             System.out.println("Qual a idade aproximada do pet ? Pode usar virgula ou ponto ");
-            String idadeDigitada = scanner.nextLine();
-
-            idadeDigitada = idadeDigitada.replace(",", ".");
+            String idadeDigitada = scanner.nextLine().replace(",", ".");
 
             try {
-                idade = Double.parseDouble(idadeDigitada);
+                double idade = Double.parseDouble(idadeDigitada);
                 if (idade < 1) {
-                    idade = (double) Math.round(idade * 10) / 10;
+                    return (double) Math.round(idade * 10) / 10;
                 }
-                System.out.println(idade);
-                break;
+                return idade;
+
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida! Digite um número válido.");
-                System.out.println(idadeDigitada);
+
             }
         }
+    }
 
 
+    public double obterPesopet() {
         while (true) {
             System.out.print("Qual o peso do pet (em kg)? ");
-            String pesoDigitado = scanner.nextLine();
+            String pesoDigitado = scanner.nextLine().replace(",", ".");
 
-            pesoDigitado = pesoDigitado.replace(",", ".");
 
             try {
-                peso = Double.parseDouble(pesoDigitado);
+                double peso = Double.parseDouble(pesoDigitado);
 
                 if (peso < 0.5 || peso > 60) {
                     throw new IllegalArgumentException("Por favor, digite um peso correspondente à raça do animal (entre 0.5kg e 60kg).");
                 }
-                break;
+                return peso;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida! Por favor, digite um número válido.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
 
-
+    private String obterRaca() {
         while (true) {
             System.out.print("Qual a raça do pet? ");
-            raca = scanner.nextLine();
+            String raca = scanner.nextLine();
+
             if (PetValidator.RacaValida(raca)) {
-                break;
+                return raca;
+            }
+            if (raca.isEmpty()) {
+                return Pet.NAO_INFORMADO;
+
             }
             System.out.println("Por favor Digite um formato valido sem numeros e caracteres " +
                     "especiais");
-
-            if (raca.isEmpty()) {
-                raca = Pet.NAO_INFORMADO;
-                break;
-            }
         }
-
-        endereco = rua + ", " + numeroDaCasa + ", " + cidade;
-        
-        Pet pet = new Pet(nomeESobrenome, tipo, sexo, endereco, idade, peso, raca);
-
-        return pet;
     }
-
 }
+

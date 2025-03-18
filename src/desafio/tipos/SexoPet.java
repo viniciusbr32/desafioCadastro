@@ -5,11 +5,11 @@ public enum SexoPet {
     FEMEA(2, "Femea");
 
     private final int codigo;
-    private final String sexo;
+    private final String sexoDescricao;
 
-    SexoPet(int codigo, String sexo) {
+    SexoPet(int codigo, String sexoDescricao) {
         this.codigo = codigo;
-        this.sexo = sexo;
+        this.sexoDescricao = sexoDescricao;
     }
 
     public int getCodigo() {
@@ -17,6 +17,6 @@ public enum SexoPet {
     }
 
     public String getSexo() {
-        return sexo;
+        return sexoDescricao;
     }
 }
