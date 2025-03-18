@@ -74,7 +74,7 @@ public class CadastroPet {
         int numeroDaCasa = obterNumeroDaCasa();
         String cidade = obterCidade();
 
-        return rua + "," + numeroDaCasa + "," + cidade;
+        return rua + ", " + numeroDaCasa + ", " + cidade;
 
     }
 

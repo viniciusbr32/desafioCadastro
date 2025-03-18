@@ -15,6 +15,13 @@ public class CreateFileCadastro {
         String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm"));
         String nomeArquivo = formattedDate + '-' + pet.getNomeESobrenome().replaceAll("\\s+", "").toUpperCase() + ".txt";
 
+        double idade = pet.getIdade();
+        String idadeFormatada = idade < 1 ? String.format("%.1f", idade) :
+                String.valueOf((int) idade);
+
+        double peso = pet.getPeso();
+        String pesoFormatado = peso < 1 ? String.format("%.1f", peso) :
+                String.valueOf((int) peso);
 
 
         File fileDiretorio = new File("petsCadastrados");
@@ -41,8 +48,8 @@ public class CreateFileCadastro {
             bw.write("2 - " + pet.getTipoPet() + System.lineSeparator());
             bw.write("3 - " + pet.getSexoPet() + System.lineSeparator());
             bw.write("4 - " + pet.getEndereco() + System.lineSeparator());
-            bw.write("5 - " + pet.getIdade() + " anos" + System.lineSeparator());
-            bw.write("6 - " + (int) pet.getPeso() + " kg" + System.lineSeparator());
+            bw.write("5 - " + idadeFormatada + " anos" + System.lineSeparator());
+            bw.write("6 - " + pesoFormatado + " kg" + System.lineSeparator());
             bw.write("7 - " + pet.getRaca() + System.lineSeparator());
             bw.flush();
 
