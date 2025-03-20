@@ -5,6 +5,7 @@ import desafio.pet.Pet;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class PetArquivo {
 
@@ -69,4 +70,71 @@ public class PetArquivo {
             throw new RuntimeException("Erro ao escrever no arquivo!", e);
         }
     }
+
+    public static void buscarPets() {
+        File diretorio = new File("petscadastrados");
+
+        String criterio = "1 - thor Moreira";
+
+        if (!diretorio.exists()) {
+            System.out.println("Diretorio não existe");
+            return;
+        }
+
+        File[] arquivos = diretorio.listFiles();
+
+        if (arquivos.length < 1) {
+            System.out.println("Não existe arquivos dentro da pasta");
+            return;
+        }
+
+        for (File arquivo : arquivos) {
+            try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+                String linha;
+                String nomePet = null, tipoPet = null, sexoPet = null, endereco = null, idade = null, peso = null, raca = null;
+
+                while ((linha = br.readLine()) != null) {
+                    linha = linha.trim();
+
+                    if (linha.startsWith("1 - ")) {
+                        nomePet = linha.substring(3);
+
+
+                    } else if (linha.startsWith("2 - ")) {
+                        tipoPet = linha.substring(3);
+
+
+                    } else if (linha.startsWith("3 - ")) {
+                        sexoPet = linha.substring(3);
+
+
+                    } else if (linha.startsWith("4 - ")) {
+                        endereco = linha.substring(3);
+
+
+                    } else if (linha.startsWith("5 - ")) {
+                        idade = linha.substring(3);
+
+
+                    } else if (linha.startsWith("6 - ")) {
+                        peso = linha.substring(3);
+
+
+                    } else if (linha.startsWith("7 - ")) {
+                        raca = linha.substring(3);
+
+                    }
+                }
+                String resultado = String.format("%s - %s - %s - %s - %s - %s - %s",
+                        nomePet, tipoPet, sexoPet, endereco, idade, peso, raca);
+                System.out.println(resultado);
+
+            } catch (IOException e) {
+                System.out.println("Erro ao ler o arquivo " + arquivo.getName() + ": " + e.getMessage());
+            }
+
+        }
+
+    }
+
 }
