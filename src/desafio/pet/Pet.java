@@ -4,7 +4,7 @@ import desafio.tipos.SexoPet;
 import desafio.tipos.TipoPet;
 
 public class Pet {
-    public static final String NAO_INFORMADO = "Não Informado";
+    public static final String NAO_INFORMADO = "Nao Informado";
 
     private String nomeESobrenome;
     private TipoPet tipoPet;

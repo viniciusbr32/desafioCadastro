@@ -5,7 +5,7 @@ import desafio.pet.Pet;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 
 public class CreateFileCadastro {
 
@@ -36,7 +36,9 @@ public class CreateFileCadastro {
         try {
             if (!fileArquivo.exists()) {
                 fileArquivo.createNewFile();
+
             }
+
         } catch (IOException e) {
             throw new RuntimeException("Erro ao criar arquivo!", e);
         }

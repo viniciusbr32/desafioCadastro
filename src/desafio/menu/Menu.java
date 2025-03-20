@@ -1,11 +1,13 @@
 package desafio.menu;
 
 import desafio.file.CreateFileCadastro;
+import desafio.file.PetArquivo;
 import desafio.pet.CadastroPet;
 import desafio.pet.Pet;
-import desafio.file.TextFileReader;
+
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -57,7 +59,15 @@ public class Menu {
     }
 
     public static void exibirMenuCadastro(Scanner scanner) {
-        File file = new File("formulario.txt");
+
+        try {
+            PetArquivo.lerArquivo("formulario.txt");
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+            return;
+        }
+
+
         CadastroPet cadastroPet = new CadastroPet();
         System.out.println();
 
@@ -66,9 +76,10 @@ public class Menu {
 
         System.out.println();
 
-        TextFileReader.lerArquivo(file);
+
         Pet novoPet = cadastroPet.cadastrarPet();
-        CreateFileCadastro.CriarArquivoCadastro(novoPet);
+        PetArquivo.criarCadastroPet(novoPet);
+
 
         System.out.println("Cadastro do pet concluído!");
         System.out.println("Deseja voltar para o menu principal? (S/N)");

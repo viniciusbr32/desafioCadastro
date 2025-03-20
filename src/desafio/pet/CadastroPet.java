@@ -17,7 +17,7 @@ public class CadastroPet {
         SexoPet sexo = obterSexoPet();
         String endereco = obterEndereco();
         double idade = obterIdade();
-        double peso = obterPesopet();
+        double peso = obterPeso();
         String raca = obterRaca();
 
 
@@ -71,10 +71,11 @@ public class CadastroPet {
     private String obterEndereco() {
         System.out.println("Vamo cadastrar o Endereço");
         String rua = obterRua();
-        String numeroDaCasa = obterNumeroDaCasa();
+        int numeroDaCasa = obterNumeroDaCasa();
         String cidade = obterCidade();
+        String numero = numeroDaCasa == -1 ? Pet.NAO_INFORMADO : String.valueOf(numeroDaCasa);
 
-        return rua + ", " + numeroDaCasa + ", " + cidade;
+        return rua + ", " + numero + ", " + cidade;
 
     }
 
@@ -91,7 +92,7 @@ public class CadastroPet {
         }
     }
 
-    private String obterNumeroDaCasa() {
+    private int obterNumeroDaCasa() {
         while (true) {
             System.out.println("Qual o número da casa?");
 
@@ -99,14 +100,13 @@ public class CadastroPet {
 
 
             if (numeroDigitado.isEmpty()) {
-                return Pet.NAO_INFORMADO;
+                return -1;
             }
 
             try {
-                int numero = Integer.parseInt(numeroDigitado);
-                return String.valueOf(numero);
+                return Integer.parseInt(numeroDigitado);
             } catch (NumberFormatException e) {
-                System.out.println("Só aceitamos numeros inteiros");
+                System.out.println("Só aceitamos números inteiros");
             }
         }
     }
@@ -149,7 +149,7 @@ public class CadastroPet {
     }
 
 
-    private double obterPesopet() {
+    private double obterPeso() {
         while (true) {
             System.out.print("Qual o peso do pet (em kg)? ");
             String pesoDigitado = scanner.nextLine().replace(",", ".");
