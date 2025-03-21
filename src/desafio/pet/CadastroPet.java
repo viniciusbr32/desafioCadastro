@@ -11,7 +11,6 @@ public class CadastroPet {
 
     public Pet cadastrarPet() {
 
-
         String nomeESobrenome = obterNomeESobrenome();
         TipoPet tipo = obterTipoPet();
         SexoPet sexo = obterSexoPet();
@@ -19,7 +18,6 @@ public class CadastroPet {
         double idade = obterIdade();
         double peso = obterPeso();
         String raca = obterRaca();
-
 
         return new Pet(nomeESobrenome, tipo, sexo, endereco, idade, peso, raca);
     }
@@ -31,17 +29,14 @@ public class CadastroPet {
 
             if (nomeESobrenome.isEmpty()) {
                 return Pet.NAO_INFORMADO;
-
             }
 
             if (PetValidator.NomeValido(nomeESobrenome)) {
                 return nomeESobrenome;
-
             }
             System.out.println("Nome inválido! Digite um nome válido com pelo menos um nome e um sobrenome, ambos compostos apenas por letras.");
         }
     }
-
 
     private TipoPet obterTipoPet() {
         while (true) {
@@ -98,7 +93,6 @@ public class CadastroPet {
 
             String numeroDigitado = scanner.nextLine().trim();
 
-
             if (numeroDigitado.isEmpty()) {
                 return -1;
             }
@@ -120,7 +114,6 @@ public class CadastroPet {
             if (!rua.isEmpty() && !rua.equals(" ")) {
                 return rua;
             }
-
             System.out.println("Digite o nome da rua");
         }
     }
@@ -157,7 +150,6 @@ public class CadastroPet {
             if (pesoDigitado.trim().isEmpty()) {
                 return -1;
             }
-
             try {
                 double peso = Double.parseDouble(pesoDigitado);
 
@@ -185,8 +177,7 @@ public class CadastroPet {
                 return Pet.NAO_INFORMADO;
 
             }
-            System.out.println("Por favor Digite um formato valido sem numeros e caracteres " +
-                    "especiais");
+            System.out.println("Por favor Digite um formato valido sem numeros e caracteres " + "especiais");
         }
     }
 }

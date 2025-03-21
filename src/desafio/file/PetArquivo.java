@@ -5,7 +5,7 @@ import desafio.pet.Pet;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.*;
 
 public class PetArquivo {
 
@@ -24,6 +24,25 @@ public class PetArquivo {
         } catch (IOException e) {
             System.out.println("Erro na leitura do arquivo" + e.getMessage());
         }
+    }
+
+    public static void formatarArray(List<String[]> listaPets) {
+        int numero = 1;
+
+        for (String[] pet : listaPets) {
+            String resultado = String.format("%d. %s - %s - %s - %s - %s - %s - %s",
+                    numero++,
+                    pet[0],  // Nome
+                    pet[1],  // Tipo
+                    pet[2],  // Sexo
+                    pet[3],  // Endereço
+                    pet[4],  // Idade
+                    pet[5],  // Peso
+                    pet[6]   // Raça
+            );
+            System.out.println(resultado);
+        }
+
     }
 
     public static void criarCadastroPet(Pet pet) {
@@ -71,22 +90,23 @@ public class PetArquivo {
         }
     }
 
-    public static void buscarPets() {
+    public static List<String[]> buscarPets() {
         File diretorio = new File("petscadastrados");
+        List<String[]> listaPets = new ArrayList<>();
 
-        String criterio = "1 - thor Moreira";
 
         if (!diretorio.exists()) {
             System.out.println("Diretorio não existe");
-            return;
+            return listaPets;
         }
 
         File[] arquivos = diretorio.listFiles();
 
         if (arquivos.length < 1) {
             System.out.println("Não existe arquivos dentro da pasta");
-            return;
+            return listaPets;
         }
+
 
         for (File arquivo : arquivos) {
             try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
@@ -94,47 +114,90 @@ public class PetArquivo {
                 String nomePet = null, tipoPet = null, sexoPet = null, endereco = null, idade = null, peso = null, raca = null;
 
                 while ((linha = br.readLine()) != null) {
-                    linha = linha.trim();
 
                     if (linha.startsWith("1 - ")) {
-                        nomePet = linha.substring(3);
-
+                        nomePet = linha.substring(4);
 
                     } else if (linha.startsWith("2 - ")) {
-                        tipoPet = linha.substring(3);
-
+                        tipoPet = linha.substring(4);
 
                     } else if (linha.startsWith("3 - ")) {
-                        sexoPet = linha.substring(3);
-
+                        sexoPet = linha.substring(4);
 
                     } else if (linha.startsWith("4 - ")) {
-                        endereco = linha.substring(3);
+                        endereco = linha.substring(4);
 
 
                     } else if (linha.startsWith("5 - ")) {
-                        idade = linha.substring(3);
+                        idade = linha.substring(4);
 
 
                     } else if (linha.startsWith("6 - ")) {
-                        peso = linha.substring(3);
+                        peso = linha.substring(4);
 
 
                     } else if (linha.startsWith("7 - ")) {
-                        raca = linha.substring(3);
+                        raca = linha.substring(4);
 
                     }
                 }
-                String resultado = String.format("%s - %s - %s - %s - %s - %s - %s",
-                        nomePet, tipoPet, sexoPet, endereco, idade, peso, raca);
-                System.out.println(resultado);
+
+
+                String[] resultado = {nomePet, tipoPet, sexoPet, endereco, idade, peso, raca};
+
+                listaPets.add(resultado);
 
             } catch (IOException e) {
                 System.out.println("Erro ao ler o arquivo " + arquivo.getName() + ": " + e.getMessage());
             }
 
         }
-
+        return listaPets;
     }
+
+    public static List<String[]> filterPets(String tipoPet, String valor1, String valor2) {
+        List<String[]> listaPets = buscarPets();
+        List<String[]> petsFiltrados = new ArrayList<>();
+
+        for (String[] pet : listaPets) {
+            if (pet[1] == null || !pet[1].equalsIgnoreCase(tipoPet)) {
+                continue;
+            }
+
+            boolean atendeFiltro = true;
+
+            if (valor1 != null && !valor1.isEmpty()) {
+                boolean encontrouValor1 = false;
+                for (String campo : pet) {
+                    if (campo != null && campo.toLowerCase().contains(valor1.toLowerCase())) {
+                        encontrouValor1 = true;
+                        break;
+                    }
+                }
+                if (!encontrouValor1) {
+                    atendeFiltro = false;
+                }
+            }
+
+            if (valor2 != null && !valor2.isEmpty()) {
+                boolean encontrouValor2 = false;
+                for (String campo : pet) {
+                    if (campo != null && campo.toLowerCase().contains(valor2.toLowerCase())) {
+                        encontrouValor2 = true;
+                        break;
+                    }
+                }
+                if (!encontrouValor2) {
+                    atendeFiltro = false;
+                }
+            }
+
+            if (atendeFiltro) {
+                petsFiltrados.add(pet);
+            }
+        }
+        return petsFiltrados;
+    }
+
 
 }
