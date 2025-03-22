@@ -3,9 +3,13 @@ package desafio.file;
 import desafio.pet.Pet;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PetArquivo {
 
@@ -24,6 +28,60 @@ public class PetArquivo {
         } catch (IOException e) {
             System.out.println("Erro na leitura do arquivo" + e.getMessage());
         }
+    }
+
+    public static List<Path> buscarArquivos(String path, Scanner scanner) {
+        Path dir = Paths.get(path);
+
+
+        try {
+            List<Path> arquivos = Files.list(dir).collect(Collectors.toList());
+
+            if (arquivos.isEmpty()) {
+                System.out.println("Nenhum arquivo encontrado.");
+                return arquivos;
+            }
+
+
+            System.out.println("Arquivos no diretório:");
+            for (int i = 0; i < arquivos.size(); i++) {
+                System.out.println(i + " - " + arquivos.get(i).getFileName());
+            }
+
+            return arquivos;
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public static void deletarArquivos() {
+        Scanner scanner = new Scanner(System.in);
+        String path = "petsCadastrados";
+
+        List<Path> arquivos = buscarArquivos(path, scanner);
+
+        System.out.print("Digite o número do arquivo a excluir: ");
+        int escolha = scanner.nextInt();
+
+        if (escolha < 0 || escolha > arquivos.size()) {
+            System.out.println("Indice invalido");
+            return;
+        }
+
+        try {
+            Path arquivoDeletar = arquivos.get(escolha);
+            Files.delete(arquivoDeletar);
+            System.out.println("Arquivo excluido com sucesso " + arquivoDeletar.getFileName());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        scanner.close();
     }
 
     public static void formatarArray(List<String[]> listaPets) {

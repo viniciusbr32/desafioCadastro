@@ -1,13 +1,12 @@
 package desafio.menu;
 
-import desafio.file.CreateFileCadastro;
+
 import desafio.file.PetArquivo;
 import desafio.pet.CadastroPet;
 import desafio.pet.Pet;
 import desafio.tipos.TipoPet;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Deletar um pet...");
-
+                    PetArquivo.deletarArquivos();
                     break;
                 case 4:
                     System.out.println("Listar todos os pets cadastrados...");
@@ -112,7 +111,7 @@ public class Menu {
 
             if (scanner.hasNextInt()) {
                 int opcao = scanner.nextInt();
-                scanner.nextLine(); // Consumir quebra de linha
+                scanner.nextLine();
 
                 if (opcao == 1) {
                     tipoPet = TipoPet.CACHORRO.getDescricao();
@@ -122,8 +121,8 @@ public class Menu {
                     break;
                 }
             } else {
-                scanner.next(); // Consumir entrada inválida
-                System.out.println("❌ Opção inválida! Escolha 1 para Cachorro ou 2 para Gato.");
+                scanner.next();
+                System.out.println("Opção inválida! Escolha 1 para Cachorro ou 2 para Gato.");
             }
         }
 
@@ -131,17 +130,18 @@ public class Menu {
             System.out.println("Escolha 1 ou 2 critérios para refinar a busca:");
             System.out.println("1 - Nome ou Sobrenome");
             System.out.println("2 - Idade");
-            System.out.println("3 - Peso");
-            System.out.println("4 - Raça");
-            System.out.println("5 - Endereço");
+            System.out.println("3 - sexo");
+            System.out.println("4 - Peso");
+            System.out.println("5 - Raça");
+            System.out.println("6 - Endereço");
 
             int criterio1;
             if (scanner.hasNextInt()) {
                 criterio1 = scanner.nextInt();
-                scanner.nextLine(); // Consumir quebra de linha
+                scanner.nextLine();
 
                 if (criterio1 < 1 || criterio1 > 5) {
-                    System.out.println("❌ Opção inválida. Escolha um número entre 1 e 5.");
+                    System.out.println(" Opção inválida. Escolha um número entre 1 e 5.");
                     continue;
                 }
 
@@ -163,14 +163,14 @@ public class Menu {
                             criterio2 = scanner.nextInt();
                             scanner.nextLine();
 
-                            if (criterio2 < 1 || criterio2 > 5 || criterio2 == criterio1) {
+                            if (criterio2 < 1 || criterio2 > 6 || criterio2 == criterio1) {
                                 System.out.println("Opção inválida! Escolha um critério diferente do primeiro.");
                                 continue;
                             }
                             break;
                         } else {
                             scanner.next();
-                            System.out.println("Opção inválida! Escolha um número entre 1 e 5.");
+                            System.out.println("Opção inválida! Escolha um número entre 1 e 6.");
                         }
                     }
 
@@ -188,7 +188,7 @@ public class Menu {
         List<String[]> petsFiltrados = PetArquivo.filterPets(tipoPet, valor1, valor2);
 
         if (petsFiltrados.isEmpty()) {
-            System.out.println( "Nenhum pet encontrado com os critérios informados.");
+            System.out.println("Nenhum pet encontrado com os critérios informados.");
         } else {
             System.out.println("Pets encontrados:");
             int contador = 1;
