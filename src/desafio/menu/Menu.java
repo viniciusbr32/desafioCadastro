@@ -37,7 +37,7 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("Alterar os dados do pet...");
-
+                    PetArquivo.editarPet();
                     break;
                 case 3:
                     System.out.println("Deletar um pet...");

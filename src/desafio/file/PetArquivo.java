@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 
 public class PetArquivo {
 
-    public static void lerArquivo(String pathname) throws IOException {
+    public static List<String> lerArquivo(String pathname) throws IOException {
         File arquivo = new File(pathname);
+
+        List<String> respostas = new ArrayList<>();
 
         if (!arquivo.exists()) {
             throw new IOException("O arquivo não foi encontrado " + pathname);
@@ -24,19 +26,19 @@ public class PetArquivo {
             String linha;
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
+                respostas.add(linha);
             }
+
         } catch (IOException e) {
             System.out.println("Erro na leitura do arquivo" + e.getMessage());
         }
+        return respostas;
     }
 
     public static List<Path> buscarArquivos(String path, Scanner scanner) {
         Path dir = Paths.get(path);
-
-
         try {
             List<Path> arquivos = Files.list(dir).collect(Collectors.toList());
-
             if (arquivos.isEmpty()) {
                 System.out.println("Nenhum arquivo encontrado.");
                 return arquivos;
@@ -82,6 +84,66 @@ public class PetArquivo {
         }
 
         scanner.close();
+    }
+
+    public static void editarPet() {
+        Scanner scanner = new Scanner(System.in);
+        String pathPasta = "petsCadastrados";
+
+
+        List<Path> arquivos = buscarArquivos(pathPasta, scanner);
+
+        System.out.println("Deseja Editar qual pet ? ");
+        List<String> respostas = new ArrayList<>();
+
+        int escolha = scanner.nextInt();
+
+        if (escolha < 0 || escolha > arquivos.size()) {
+            System.out.println("Por favor escolha um arquivo existente");
+            return;
+        }
+
+        try {
+            String caminhoArquivo = Paths.get(pathPasta,
+                    arquivos.get(escolha).getFileName().toString()).toString();
+            respostas = (lerArquivo(caminhoArquivo));
+
+            System.out.println("Escolha a resposta que quer editar com base no numero da pergunta");
+
+            escolha = scanner.nextInt();
+
+            if (escolha < 0 || escolha > respostas.size()) {
+                return;
+            }
+
+            System.out.println("Agora digite a nova resposta");
+
+            scanner.nextLine();
+
+            String respostaPet = scanner.nextLine();
+            String respostaFormatada = (escolha) + " - " + respostaPet;
+
+
+            int indexEscolha = escolha - 1;
+
+
+            respostas.set(indexEscolha, respostaFormatada);
+
+            reescreverArquivo(Path.of(caminhoArquivo), respostas);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void reescreverArquivo(Path caminhoArquivo, List<String> respostas) {
+        try {
+            Files.write(caminhoArquivo, respostas);
+            System.out.println("Deu certo");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void formatarArray(List<String[]> listaPets) {
